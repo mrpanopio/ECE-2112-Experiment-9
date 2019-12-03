@@ -1,0 +1,24 @@
+import pandas as pd
+
+d1={'Student':['Ice Bear','Panda','Grizzly'],'Math':[80,95,79]}
+Math = pd.DataFrame(d1,columns=['Student','Math'])
+
+d2={'Student':['Ice Bear','Panda','Grizzly'],'Electronics':[80,81,83]}
+Electronics =pd.DataFrame(d2,columns=['Student','Electronics'])
+
+d3={'Student':['Ice Bear','Panda','Grizzly'],'GEAS':[90,79,93]}
+Geas = pd.DataFrame(d3,columns=['Student','GEAS'])
+
+d4={'Student':['Ice Bear','Panda','Grizzly'],'ESAT':[90,79,93]}
+Esat = pd.DataFrame(d4,columns=['Student','ESAT'])
+
+d12= pd.merge(Math, Electronics, how = 'outer')
+d123= pd.merge(d12, Geas, how = 'outer')
+d1234= pd.merge(d123, Esat, how = 'outer')
+
+tidyd=pd.melt(d1234,id_vars='Student',
+              value_vars=['Math','Electronics','GEAS','ESAT'])
+x=tidyd.rename(columns={'variable':'Subject', 'value':'Grades'})
+y=x.sort_values('Student')
+z=y.reset_index()
+a=z.drop(columns=['index'])
